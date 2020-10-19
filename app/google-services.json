@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1094812030574",
+    "firebase_url": "https://cutlinemobile.firebaseio.com",
+    "project_id": "cutlinemobile",
+    "storage_bucket": "cutlinemobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094812030574:android:c74eb992991e374f5eb87f",
+        "android_client_info": {
+          "package_name": "com.ribal.cutline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094812030574-8lnqstk8am5a0j5b0k5l5rjg0kjvd08d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi_8mHOrr0QwVhWlxhU2hwnhUGb_KgABk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094812030574-8lnqstk8am5a0j5b0k5l5rjg0kjvd08d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

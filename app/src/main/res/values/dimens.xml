@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tendp">10dp</dimen>
+    <dimen name="dualimapuluh">250dp</dimen>
+    <dimen name="seratus">100dp</dimen>
+    <dimen name="limaratus">500dp</dimen>
+    <dimen name="tigaenamsp">36sp</dimen>
+    <dimen name="tigaratusdp">300dp</dimen>
+    <dimen name="limapuluhdp">50dp</dimen>
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="card_album_radius">0dp</dimen>
+    <dimen name="card_cover_height">130dp</dimen>
+    <dimen name="card_title_padding">10dp</dimen>
+    <dimen name="card_price_padding_bottom">5dp</dimen>
+</resources>

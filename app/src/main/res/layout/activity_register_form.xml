@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_item"
+    tools:context=".RegisterForm">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/dualimapuluh"
+        android:layout_height="@dimen/seratus"
+        android:src="@drawable/logoword"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01999998" />
+
+    <LinearLayout
+        android:id="@+id/cardView3"
+        android:layout_width="0dp"
+        android:layout_height="600dp"
+        android:background="@drawable/lin_lay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alegreya_sc"
+                android:text="Register"
+                android:textColor="@color/colortext"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.04000002" />
+
+            <EditText
+                android:id="@+id/name_reg"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:background="@drawable/et_bg"
+                android:drawableLeft="@drawable/ic_baseline_account_circle_24"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="Fullname"
+                android:inputType="textCapSentences"
+                android:padding="10dp"
+                android:textColor="@color/colortext"
+                android:textColorHint="@color/colortext"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textView"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintVertical_bias="0.100000024" />
+
+            <EditText
+                android:id="@+id/email_reg"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:background="@drawable/et_bg"
+                android:drawableLeft="@drawable/ic_baseline_email_24"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:textColor="@color/colortext"
+                android:textColorHint="@color/colortext"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/name_reg"
+                app:layout_constraintStart_toStartOf="@+id/name_reg"
+                app:layout_constraintTop_toBottomOf="@+id/name_reg"
+                app:layout_constraintVertical_bias="0.050000012" />
+
+            <EditText
+                android:id="@+id/pass_reg"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:background="@drawable/et_bg"
+                android:drawableLeft="@drawable/ic_baseline_lock_24"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/colortext"
+                android:textColorHint="@color/colortext"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/email_reg"
+                app:layout_constraintStart_toStartOf="@+id/email_reg"
+                app:layout_constraintTop_toBottomOf="@+id/email_reg"
+                app:layout_constraintVertical_bias="0.050000012" />
+
+            <Button
+                android:id="@+id/register_btn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_bt_black"
+                android:text="Register"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.89" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="350dp"
+                android:layout_height="100dp"
+                android:background="@drawable/et_bg"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/pass_reg"
+                app:layout_constraintStart_toStartOf="@+id/pass_reg"
+                app:layout_constraintTop_toBottomOf="@+id/pass_reg"
+                app:layout_constraintVertical_bias="0.100000024">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="message icon"
+                    android:paddingLeft="@dimen/tendp"
+                    android:paddingTop="@dimen/tendp"
+                    android:paddingBottom="@dimen/tendp"
+                    android:scaleType="fitStart"
+
+                    android:src="@drawable/ic_baseline_location_on_24" />
+
+                <EditText
+                    android:id="@+id/alamat_reg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:padding="4dp"
+                    android:hint="Alamat"
+                    android:textColor="@color/colortext"
+                    android:textColorHint="@color/colortext" />
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
