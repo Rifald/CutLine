@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ribal.cutline">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".EditProfile"></activity>
+        <activity android:name=".AddImageBusiness"></activity>
+        <activity android:name=".BarberPageActivity" />
+        <activity android:name=".FindBarberActivity" />
+        <activity android:name=".CreateBusinessActivity" />
+        <activity android:name=".ManageBusinessActivity" />
+        <activity android:name=".EditProfile" />
         <activity android:name=".MainActivityUser" />
         <activity android:name=".RegisterForm" />
         <activity android:name=".Register" />
@@ -26,6 +36,18 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.ribal.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
     </application>
 
 </manifest>

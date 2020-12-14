@@ -1,22 +1,29 @@
 package com.ribal.cutline;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -29,6 +36,7 @@ import androidx.fragment.app.Fragment;
 
 public class FragmentDashboardBarber extends Fragment {
 
+    Button manageB;
     TextView namaTv,alamatTv;
     ImageView profileIv;
     FirebaseFirestore fstore;
@@ -59,6 +67,8 @@ public class FragmentDashboardBarber extends Fragment {
         alamatTv = view.findViewById(R.id.alamat_user);
         profileIv = view.findViewById(R.id.profileImageView);
 
+        manageB = view.findViewById(R.id.manage_btn);
+
         storageReference = FirebaseStorage.getInstance().getReference();
         fstore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
@@ -83,6 +93,14 @@ public class FragmentDashboardBarber extends Fragment {
 
                     }
                 });
+            }
+        });
+
+        manageB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getActivity(), ManageBusinessActivity.class));
             }
         });
     }

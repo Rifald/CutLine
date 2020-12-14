@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -25,13 +26,13 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -48,127 +49,176 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EditProfile extends AppCompatActivity {
+public class CreateBusinessActivity extends AppCompatActivity {
+    private Button simpanBtn;
+    ImageView imgB;
 
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;
     public static final int GALLERY_REQUEST_CODE = 105;
     String currentPhotoPath;
     public Uri contentUri;
-    public static final String TAG = "TAG";
-    EditText profileFullName, profileEmail, profileAlamat;
-    ImageView profileImageView;
-    Button saveBtn, uploadBtn;
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
-    FirebaseUser user;
+
+    private Button upBtn;
+    private EditText namaB;
+    private EditText alamatB, descB;
+    private TextView urltv;
+    private EditText hargaB;
+    private EditText contactB;
+    private FirebaseFirestore db;
     StorageReference storageReference;
+    FirebaseAuth fAuth;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_create_business);
+
+        db = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference("Barber");
+        fAuth = FirebaseAuth.getInstance();
+        userId = fAuth.getCurrentUser().getUid();
+
+        simpanBtn = findViewById(R.id.simpan_btn);
+        upBtn = findViewById(R.id.up_btn);
+        namaB = findViewById(R.id.nama_usaha);
+        descB = findViewById(R.id.desc_usaha);
+        alamatB = findViewById(R.id.alamat_usaha);
+        hargaB = findViewById(R.id.harga_usaha);
+        contactB = findViewById(R.id.contact_create);
+
+
+        imgB = findViewById(R.id.img_create);
 
         Intent data = getIntent();
-        final String fullName = data.getStringExtra("nama");
-        String email = data.getStringExtra("email");
-        String alamat = data.getStringExtra("alamat");
+        final String id = data.getStringExtra("idU");
 
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
-        user = fAuth.getCurrentUser();
-        storageReference = FirebaseStorage.getInstance().getReference();
+        if (id != null) {
 
-        profileFullName = findViewById(R.id.profileFullName);
-        profileEmail = findViewById(R.id.profileEmailAddress);
-        profileAlamat = findViewById(R.id.alamat);
-        profileImageView = findViewById(R.id.profileImageView);
-        saveBtn = findViewById(R.id.saveProfileInfo);
-        uploadBtn = findViewById(R.id.upload_btn);
+            db.collection("barber").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+
+                        namaB.setText(documentSnapshot.getString("nama"));
+                        alamatB.setText(documentSnapshot.getString("alamat"));
+                        descB.setText(documentSnapshot.getString("desc"));
+                        hargaB.setText(documentSnapshot.get("harga").toString());
+                        contactB.setText(documentSnapshot.get("contact").toString());
+                        final StorageReference Ref = storageReference.child(namaB.getText()  + "/Profile.jpg");
+                        Ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Picasso.get().load(uri).fit().placeholder(R.mipmap.ic_launcher)
+                                        .centerCrop().into(imgB);
+
+                            }
+                        });
+                    }
+                }
+            });
+
+        }
 
 
-        final StorageReference profileRef = storageReference.child("users/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).fit().placeholder(R.mipmap.ic_launcher)
-                        .centerCrop().into(profileImageView);
-
-            }
-        });
-
-        uploadBtn.setOnClickListener(new View.OnClickListener() {
+        upBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectImage();
-
             }
+
+
         });
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+        simpanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (profileFullName.getText().toString().isEmpty()) {
-                    profileFullName.setError("Silahkan Isi Nama Lengkap");
-                    return;
-                } else if (profileEmail.getText().toString().isEmpty()) {
-                    profileEmail.setError("Silahkan Isi Email");
-                    return;
-                } else if (profileAlamat.getText().toString().isEmpty()) {
-                    profileAlamat.setError("Silahkan Isi Mata Pelajaran");
-                    return;
+            public void onClick(View view) {
+
+                String nama = namaB.getText().toString().trim();
+                String desc = descB.getText().toString().trim();
+                String alamat = alamatB.getText().toString().trim();
+                String hrg = hargaB.getText().toString().trim();
+                String contact = contactB.getText().toString().trim();
+
+
+                if (!validateInputs(nama, desc, alamat, hrg, contact)) {
+                    final ProgressDialog progressDialog = new ProgressDialog(CreateBusinessActivity.this);
+
+                    progressDialog.setMessage("Creating...");
+                    progressDialog.show();
+
+                    Map<String, Object> file = new HashMap<>();
+                    file.put("id", userId);
+                    file.put("nama", namaB.getText().toString());
+                    file.put("desc", descB.getText().toString());
+                    file.put("contact", contactB.getText().toString());
+                    file.put("harga", Integer.parseInt(String.valueOf(hargaB.getText())));
+                    file.put("alamat", alamatB.getText().toString());
+                    db.collection("barber").document(userId)
+                            .set(file)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(CreateBusinessActivity.this, "Usaha Ditambahkan", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(CreateBusinessActivity.this, ManageBusinessActivity.class));
+                                    finish();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+
+
                 }
-                final ProgressDialog progressDialog = new ProgressDialog(EditProfile.this);
-                final String email = profileEmail.getText().toString();
-
-                progressDialog.setMessage("Updating...");
-                progressDialog.show();
+            }
 
 
-                user.updateEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        DocumentReference docRef = fStore.collection("users").document(user.getUid());
-                        Map<String, Object> edited = new HashMap<>();
-                        edited.put("email", email);
-                        edited.put("nama", profileFullName.getText().toString());
-                        edited.put("matpel", profileAlamat.getText().toString());
+            private boolean validateInputs(String nama, String desc, String alamat, String hrg, String contact) {
+                if (nama.isEmpty()) {
+                    namaB.setError("Nama Harus Diisi!");
+                    namaB.requestFocus();
+                    return true;
+                }
 
-                        docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(EditProfile.this, "Profile Updated", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        });
+                if (desc.isEmpty()) {
+                    descB.setError("Alamat Harus Diisi!");
+                    descB.requestFocus();
+                    return true;
+                }
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(EditProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (alamat.isEmpty()) {
+                    alamatB.setError("Alamat Harus Diisi!");
+                    alamatB.requestFocus();
+                    return true;
+                }
 
+                if (hrg.isEmpty()) {
+                    hargaB.setError("Harga Harus Diisi!");
+                    hargaB.requestFocus();
+                    return true;
+                }
 
-                // Get a URL to the uploaded content
-                // Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
-
+                if (contact.isEmpty()) {
+                    contactB.setError("Contact Harus Diisi!");
+                    contactB.requestFocus();
+                    return true;
+                }
+                return false;
             }
 
         });
 
-        profileEmail.setText(email);
-        profileFullName.setText(fullName);
-        profileAlamat.setText(alamat);
-
-        Log.d(TAG, "onCreate: " + fullName + " " + email + " " + alamat);
     }
 
     private void selectImage() {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditProfile.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(CreateBusinessActivity.this);
         builder.setTitle("Add Photo!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -218,7 +268,7 @@ public class EditProfile extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 dispatchTakePictureIntent();
             } else {
-                Toast.makeText(this, "Camera Permission is Required to Use camera & storage.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Camera Permission is Required to Use camera.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -229,7 +279,7 @@ public class EditProfile extends AppCompatActivity {
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 File f = new File(currentPhotoPath);
-                profileImageView.setImageURI(Uri.fromFile(f));
+                imgB.setImageURI(Uri.fromFile(f));
                 Log.d("tag", "ABsolute Url of Image is " + Uri.fromFile(f));
 
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -237,7 +287,6 @@ public class EditProfile extends AppCompatActivity {
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
                 uploadImageToFirebase(f.getName(), contentUri);
-
             }
 
         }
@@ -248,7 +297,7 @@ public class EditProfile extends AppCompatActivity {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String imageFileName = "JPEG_" + timeStamp + "." + getFileExt(contentUri);
                 Log.d("tag", "onActivityResult: Gallery Image Uri:  " + imageFileName);
-                profileImageView.setImageURI(contentUri);
+                imgB.setImageURI(contentUri);
                 uploadImageToFirebase(imageFileName, contentUri);
             }
 
@@ -258,11 +307,12 @@ public class EditProfile extends AppCompatActivity {
     }
 
     private void uploadImageToFirebase(String name, Uri contentUri) {
-        final StorageReference profileRef = storageReference.child("users/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
-        profileRef.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+        final StorageReference Ref = storageReference.child(namaB.getText() + "/Profile.jpg");
+        Ref.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                Ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         Log.d("tag", "onSuccess: Uploaded Image URl is " + uri.toString());
@@ -272,12 +322,11 @@ public class EditProfile extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EditProfile.this, "Upload Failled.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateBusinessActivity.this, "Upload Failled.", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
-
 
     private String getFileExt(Uri contentUri) {
         ContentResolver c = getContentResolver();
@@ -327,6 +376,7 @@ public class EditProfile extends AppCompatActivity {
     }
 
     public void onBackPressed() {
+        startActivity(new Intent(CreateBusinessActivity.this, ManageBusinessActivity.class));
         finish();
     }
 }

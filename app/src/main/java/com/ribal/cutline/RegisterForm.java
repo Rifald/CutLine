@@ -103,7 +103,7 @@ public class RegisterForm extends AppCompatActivity {
                 }
 
                 if (TextUtils.isEmpty(alamat)) {
-                    reg_alamat.setError("Mata pelajaran is Required.");
+                    reg_alamat.setError("Alamat is Required.");
                     return;
                 }
 
@@ -117,7 +117,6 @@ public class RegisterForm extends AppCompatActivity {
                             Map<String, Object> user = new HashMap<>();
                             user.put("nama", fullName);
                             user.put("email", email);
-                            user.put("alamat", alamat);
                             user.put("type",type);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

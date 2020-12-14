@@ -49,7 +49,7 @@ public class MainActivityUser extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_dashboard:
-                    fragment = new FragmentDashboardBarber();
+                    fragment = new FragmentDashboardUser();
                     loadFragment(fragment);
                     return true;
 
@@ -67,7 +67,6 @@ public class MainActivityUser extends AppCompatActivity {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
