@@ -27,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.ribal.cutline.Adapter.OrderRequestAdapter;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
@@ -36,7 +37,7 @@ import androidx.fragment.app.Fragment;
 
 public class FragmentDashboardBarber extends Fragment {
 
-    Button manageB;
+    Button manageB,reserveB;
     TextView namaTv,alamatTv;
     ImageView profileIv;
     FirebaseFirestore fstore;
@@ -68,6 +69,7 @@ public class FragmentDashboardBarber extends Fragment {
         profileIv = view.findViewById(R.id.profileImageView);
 
         manageB = view.findViewById(R.id.manage_btn);
+        reserveB = view.findViewById(R.id.reserve_btn);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         fstore = FirebaseFirestore.getInstance();
@@ -103,5 +105,13 @@ public class FragmentDashboardBarber extends Fragment {
                 startActivity(new Intent(getActivity(), ManageBusinessActivity.class));
             }
         });
+        reserveB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getActivity(), OrderRequestActivity.class));
+            }
+        });
+
     }
 }

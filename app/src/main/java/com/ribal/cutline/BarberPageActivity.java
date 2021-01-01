@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
     ViewPager viewPager;
     ViewPageAdapter viewPagerAdapter;
 
+    private ChatRoomRepository chatRoomRepository;
+
     com.ribal.cutline.Interface.iFireStoreLoadDone iFireStoreLoadDone;
     CollectionReference img_page;
 
@@ -62,14 +65,18 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
         storageReference = FirebaseStorage.getInstance().getReference("Barber");
         fAuth = FirebaseAuth.getInstance();
         userId = fAuth.getCurrentUser().getUid();
+        chatRoomRepository = new ChatRoomRepository(FirebaseFirestore.getInstance());
 
         pesanbtn = findViewById(R.id.pesan_btn);
+        chatbtn = findViewById(R.id.chat_btn);
         nama = findViewById(R.id.nama_usahanya);
         desc = findViewById(R.id.desc_usaha);
         alamat = findViewById(R.id.alamat_usaha);
         harga = findViewById(R.id.harga_usaha);
         contact = findViewById(R.id.contact_usaha);
         img_prof = findViewById(R.id.img_profile);
+
+        chatRoomRepository = new ChatRoomRepository(FirebaseFirestore.getInstance());
 
         db.collection("barber").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
@@ -90,12 +97,7 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
 
                         }
                     });
-                    Picasso.get()
-                            .load(documentSnapshot.getString("url"))
-                            .placeholder(R.mipmap.ic_launcher)
-                            .fit()
-                            .centerCrop()
-                            .into(img_prof);
+
                 }
             }
 
@@ -107,6 +109,23 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
         viewPager = findViewById(R.id.img_VP);
 
         getData();
+
+        pesanbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(BarberPageActivity.this,ReservationActivity.class);
+                i.putExtra("id",id);
+                startActivity(i);
+            }
+        });
+
+        chatbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 
@@ -141,6 +160,7 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
     public void onFireStoreLoadFailed(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
+
 
 
 }

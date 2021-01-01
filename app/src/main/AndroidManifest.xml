@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ribal.cutline">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,7 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".AddImageBusiness"></activity>
+        <activity android:name=".ChatRoomActivity"></activity>
+        <activity android:name=".ReservationDetailActivity" />
+        <activity android:name=".OrderDetailActivity" />
+        <activity android:name=".OrderRequestActivity" />
+        <activity android:name=".OrderHistoryActivity" />
+        <activity android:name=".ReservationActivity" />
+        <activity android:name=".AddImageBusiness" />
         <activity android:name=".BarberPageActivity" />
         <activity android:name=".FindBarberActivity" />
         <activity android:name=".CreateBusinessActivity" />
@@ -37,7 +43,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.ribal.android.fileprovider"
@@ -45,9 +50,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>

@@ -12,40 +12,42 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.ribal.cutline.Adapter.FindBarberAdapter;
-import com.ribal.cutline.model.Barber;
+import com.ribal.cutline.Adapter.OrderHistoryAdapter;
 
-public class FindBarberActivity extends AppCompatActivity {
+import com.ribal.cutline.model.Pesanan;
+
+public class OrderHistoryActivity extends AppCompatActivity {
+
     FirebaseAuth fAuth;
     String userId;
     private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-    private FindBarberAdapter adapter;
+    private OrderHistoryAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_barber);
+        setContentView(R.layout.activity_order_history);
+
         fAuth = FirebaseAuth.getInstance();
         userId = fAuth.getCurrentUser().getUid();
 
-        Query query = fStore.collection("barber");
-        FirestoreRecyclerOptions<Barber> options = new FirestoreRecyclerOptions.Builder<Barber>()
-                .setQuery(query, Barber.class)
+        Query query = fStore.collection("pesan").whereEqualTo("userid",userId);
+        FirestoreRecyclerOptions<Pesanan> options = new FirestoreRecyclerOptions.Builder<Pesanan>()
+                .setQuery(query, Pesanan.class)
                 .build();
 
-        adapter = new FindBarberAdapter(options);
+        adapter = new OrderHistoryAdapter(options);
         RecyclerView recyclerView = findViewById(R.id.recyclerView2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnClickListener(new FindBarberAdapter.OnItemClickListener() {
+        adapter.setOnClickListener(new OrderHistoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(DocumentSnapshot documentSnapshot, int position) {
-
                 String id = documentSnapshot.getId();
 
-                Intent i = new Intent(FindBarberActivity.this,BarberPageActivity.class);
+                Intent i = new Intent(OrderHistoryActivity.this,ReservationDetailActivity.class);
                 i.putExtra("id",id);
                 startActivity(i);
 

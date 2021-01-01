@@ -98,7 +98,7 @@ public class ManageBusinessActivity extends AppCompatActivity implements com.rib
                     desc.setText(documentSnapshot.getString("desc"));
                     harga.setText(documentSnapshot.get("harga").toString());
                     contact.setText(documentSnapshot.getString("contact"));
-                    final StorageReference Ref = storageReference.child(nama.getText()  + "/Profile.jpg");
+                    final StorageReference Ref = storageReference.child(nama.getText().toString().trim()  + "/Profile.jpg");
                     Ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {

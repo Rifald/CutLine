@@ -33,7 +33,7 @@ public class FragmentDashboardUser extends Fragment {
 
     TextView namaTv,alamatTv;
     ImageView profileIv;
-    Button findBarber;
+    Button findBarber,orderHistory;
     FirebaseFirestore fstore;
     FirebaseAuth fAuth;
     String userId;
@@ -63,6 +63,7 @@ public class FragmentDashboardUser extends Fragment {
         alamatTv = view.findViewById(R.id.alamat_user);
         profileIv = view.findViewById(R.id.profileImageView);
         findBarber = view.findViewById(R.id.find_barber);
+        orderHistory = view.findViewById(R.id.orderhis_btn);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -95,6 +96,13 @@ public class FragmentDashboardUser extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(),FindBarberActivity.class));
+            }
+        });
+
+        orderHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),OrderHistoryActivity.class));
             }
         });
     }

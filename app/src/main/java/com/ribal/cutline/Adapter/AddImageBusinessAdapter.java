@@ -19,8 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AddImageBusinessAdapter extends FirestoreRecyclerAdapter<ImagePage, AddImageBusinessAdapter.ImagePageHolder> {
-
-    private FindBarberAdapter.OnItemClickListener listener;
+    
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -84,23 +83,7 @@ public class AddImageBusinessAdapter extends FirestoreRecyclerAdapter<ImagePage,
                 }
             });
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && listener != null){
-                        listener.onItemClickListener(getSnapshots().getSnapshot(position),position);
-                    }
-                }
-            });
         }
-    }
-    public interface OnItemClickListener{
-        void onItemClickListener(DocumentSnapshot documentSnapshot, int position);
-    }
-
-    public void setOnClickListener(FindBarberAdapter.OnItemClickListener listener){
-        this.listener = listener;
     }
 
 
