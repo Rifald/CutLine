@@ -7,7 +7,7 @@
     android:animateLayoutChanges="false"
     android:animationCache="false"
     android:background="@color/colorPrimaryDark"
-    tools:context=".CreateBusinessActivity">
+    tools:context=".activity.CreateBusinessActivity">
 
     <TextView
         android:id="@+id/textView3"

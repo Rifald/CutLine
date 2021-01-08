@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentDashboardBarber">
+    tools:context=".fragment.FragmentDashboardBarber">
 
 
     <androidx.cardview.widget.CardView
@@ -123,7 +123,7 @@
         app:layout_constraintVertical_bias="0.22000003" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/chat_btn"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:text="Chat"
