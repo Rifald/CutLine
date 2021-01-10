@@ -43,7 +43,9 @@
             android:id="@+id/tambah_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tambahkan" />
+            android:text="Tambahkan"
+            android:padding="10dp"
+            android:background="@drawable/round_bt"/>
     </RelativeLayout>
 
 </RelativeLayout>

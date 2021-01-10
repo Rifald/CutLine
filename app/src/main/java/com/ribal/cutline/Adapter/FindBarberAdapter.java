@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -45,7 +46,11 @@ public class FindBarberAdapter extends  FirestoreRecyclerAdapter<Barber, FindBar
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).fit().placeholder(R.mipmap.ic_launcher)
                         .fit().centerCrop().into(holder.imgProfile);
-
+                holder.namaTv.setVisibility(View.VISIBLE);
+                holder.alamatTv.setVisibility(View.VISIBLE);
+                holder.imgProfile.setVisibility(View.VISIBLE);
+                holder.sep.setVisibility(View.VISIBLE);
+                holder.progressBar.setVisibility(View.GONE);
             }
         });
 
@@ -70,12 +75,21 @@ public class FindBarberAdapter extends  FirestoreRecyclerAdapter<Barber, FindBar
 
         TextView namaTv, alamatTv;
         ImageView imgProfile;
+        ProgressBar progressBar;
+        View sep;
 
         public BarberHolder(@NonNull View itemView) {
             super(itemView);
             namaTv = itemView.findViewById(R.id.nama_usaha);
             alamatTv = itemView.findViewById(R.id.alamat_usaha);
             imgProfile = itemView.findViewById(R.id.profileImageView);
+            progressBar = itemView.findViewById(R.id.progressBar);
+            sep = itemView.findViewById(R.id.separator);
+
+            namaTv.setVisibility(View.GONE);
+            alamatTv.setVisibility(View.GONE);
+            imgProfile.setVisibility(View.GONE);
+            sep.setVisibility(View.GONE);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -14,11 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activity.ChatActivity"></activity>
+        <activity android:name=".activity.OrderAcceptActivity"></activity>
+        <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.ChatRoomActivity" />
         <activity android:name=".activity.ChatRoomBarberActivity" />
         <activity android:name=".activity.ReservationDetailActivity" />
+        <activity android:name=".activity.ReservationDetailCompleteActivity" />
         <activity android:name=".activity.OrderDetailActivity" />
+        <activity android:name=".activity.OrderDetailCompleteActivity" />
         <activity android:name=".activity.OrderRequestActivity" />
         <activity android:name=".activity.OrderHistoryActivity" />
         <activity android:name=".activity.ReservationActivity" />

@@ -19,7 +19,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.ribal.cutline.Adapter.OrderHistoryAdapter;
+import com.ribal.cutline.Adapter.OrderRequestAdapter;
 import com.ribal.cutline.R;
+import com.ribal.cutline.activity.OrderAcceptActivity;
+import com.ribal.cutline.activity.OrderDetailActivity;
 import com.ribal.cutline.activity.ReservationDetailActivity;
 import com.ribal.cutline.model.Pesanan;
 
@@ -28,7 +31,7 @@ public class OrderRequestFragment extends Fragment {
     FirebaseAuth fAuth;
     String userId;
     private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-    private OrderHistoryAdapter adapter;
+    private OrderRequestAdapter adapter;
 
     public OrderRequestFragment() {
         // Required empty public constructor
@@ -52,25 +55,33 @@ public class OrderRequestFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         fAuth = FirebaseAuth.getInstance();
         userId = fAuth.getCurrentUser().getUid();
-        Query query = fStore.collection("pesan").whereEqualTo("usahaid",userId);
+        Query query = fStore.collection("pesan").whereEqualTo("usahaid",userId).orderBy("sent", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Pesanan> options = new FirestoreRecyclerOptions.Builder<Pesanan>()
                 .setQuery(query, Pesanan.class)
                 .build();
 
-        adapter = new OrderHistoryAdapter(options);
+
+        adapter = new OrderRequestAdapter(options);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnClickListener(new OrderHistoryAdapter.OnItemClickListener() {
+        adapter.setOnClickListener(new OrderRequestAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(DocumentSnapshot documentSnapshot, int position) {
                 String id = documentSnapshot.getId();
+                String status = documentSnapshot.getString("status");
+                if(status.equals("Diterima")){
+                    Intent i = new Intent(getActivity(), OrderAcceptActivity.class);
+                    i.putExtra("id",id);
+                    startActivity(i);
+                }else{
+                    Intent i = new Intent(getActivity(), OrderDetailActivity.class);
+                    i.putExtra("id",id);
+                    startActivity(i);
+                }
 
-                Intent i = new Intent(getActivity(), ReservationDetailActivity.class);
-                i.putExtra("id",id);
-                startActivity(i);
             }
         });
 

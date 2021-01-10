@@ -52,15 +52,14 @@
                 android:id="@+id/name_reg"
                 android:layout_width="350dp"
                 android:layout_height="50dp"
+                android:ems="10"
+                android:hint="Fullname"
                 android:background="@drawable/et_bg"
                 android:drawableLeft="@drawable/ic_baseline_account_circle_24"
                 android:drawablePadding="5dp"
-                android:ems="10"
-                android:hint="Fullname"
                 android:inputType="textCapSentences"
                 android:padding="10dp"
                 android:textColor="@color/colortext"
-                android:textColorHint="@color/colortext"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/textView"
                 app:layout_constraintStart_toStartOf="@+id/textView"
@@ -71,15 +70,14 @@
                 android:id="@+id/email_reg"
                 android:layout_width="350dp"
                 android:layout_height="50dp"
+                android:ems="10"
+                android:hint="Email"
                 android:background="@drawable/et_bg"
                 android:drawableLeft="@drawable/ic_baseline_email_24"
                 android:drawablePadding="5dp"
-                android:ems="10"
-                android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
                 android:textColor="@color/colortext"
-                android:textColorHint="@color/colortext"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/name_reg"
                 app:layout_constraintStart_toStartOf="@+id/name_reg"
@@ -98,7 +96,7 @@
                 android:inputType="textPassword"
                 android:padding="10dp"
                 android:textColor="@color/colortext"
-                android:textColorHint="@color/colortext"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/email_reg"
                 app:layout_constraintStart_toStartOf="@+id/email_reg"
@@ -152,7 +150,7 @@
                     android:padding="4dp"
                     android:hint="Alamat"
                     android:textColor="@color/colortext"
-                    android:textColorHint="@color/colortext" />
+ />
 
 
             </LinearLayout>

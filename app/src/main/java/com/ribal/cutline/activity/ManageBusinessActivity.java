@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,12 +48,15 @@ public class ManageBusinessActivity extends AppCompatActivity implements com.rib
     FloatingActionButton floatingActionButton;
     FirebaseAuth fAuth;
     String userId;
+    LinearLayout ln;
 
     ViewPager viewPager;
     ViewPageAdapter viewPagerAdapter;
 
     iFireStoreLoadDone iFireStoreLoadDone;
     CollectionReference img_page;
+
+    ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +77,11 @@ public class ManageBusinessActivity extends AppCompatActivity implements com.rib
         img_prof = findViewById(R.id.img_profile);
         floatingActionButton= findViewById(R.id.float_btn);
         editbtn = findViewById(R.id.edit_btn);
+        ln = findViewById(R.id.linearLayout2);
+        pb = findViewById(R.id.progressBar);
 
-
+        ln.setVisibility(View.GONE);
+        floatingActionButton.setVisibility(View.GONE);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +109,10 @@ public class ManageBusinessActivity extends AppCompatActivity implements com.rib
                         public void onSuccess(Uri uri) {
                             Picasso.get().load(uri).fit().placeholder(R.mipmap.ic_launcher)
                                     .centerCrop().into(img_prof);
+                            ln.setVisibility(View.VISIBLE);
+                            floatingActionButton.setVisibility(View.VISIBLE);
+                            pb.setVisibility(View.GONE);
+
 
                         }
                     });
@@ -113,7 +125,6 @@ public class ManageBusinessActivity extends AppCompatActivity implements com.rib
 
         });
 
-        //init
         iFireStoreLoadDone = this;
         img_page = FirebaseFirestore.getInstance().collection("barber").document(userId).collection("image");
         viewPager = findViewById(R.id.img_VP);

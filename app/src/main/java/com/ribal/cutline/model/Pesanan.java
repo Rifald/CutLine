@@ -9,12 +9,14 @@ public class Pesanan {
     private String contact;
     private String tanggal;
     private String waktu;
+    private String catatan;
+    private long sent;
 
     public Pesanan(){
 
     }
 
-    public Pesanan(String usahaid, String userid, String nama, String alamat, String status, String contact, String tanggal, String waktu) {
+    public Pesanan(String usahaid, String userid, String nama, String alamat, String status, String contact, String tanggal, String waktu, String catatan, long sent) {
         this.usahaid = usahaid;
         this.userid = userid;
         this.nama = nama;
@@ -23,6 +25,24 @@ public class Pesanan {
         this.contact = contact;
         this.tanggal = tanggal;
         this.waktu = waktu;
+        this.catatan = catatan;
+        this.sent = sent;
+    }
+
+    public String getCatatan() {
+        return catatan;
+    }
+
+    public void setCatatan(String catatan) {
+        this.catatan = catatan;
+    }
+
+    public long getSent() {
+        return sent;
+    }
+
+    public void setSent(long sent) {
+        this.sent = sent;
     }
 
     public String getUsahaid() {

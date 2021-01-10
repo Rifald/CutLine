@@ -54,7 +54,7 @@ public class OrderHistoryFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         fAuth = FirebaseAuth.getInstance();
         userId = fAuth.getCurrentUser().getUid();
-        Query query = fStore.collection("pesan").whereEqualTo("userid",userId);
+        Query query = fStore.collection("pesan").whereEqualTo("userid",userId).orderBy("sent", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Pesanan> options = new FirestoreRecyclerOptions.Builder<Pesanan>()
                 .setQuery(query, Pesanan.class)
                 .build();

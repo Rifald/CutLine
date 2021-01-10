@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,9 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
     StorageReference storageReference;
     FirebaseAuth fAuth;
     String userId;
+    LinearLayout ln;
+    ProgressBar pb;
+
 
     ViewPager viewPager;
     ViewPageAdapter viewPagerAdapter;
@@ -61,7 +66,7 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
     CollectionReference img_page;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barber_page);
 
@@ -84,24 +89,32 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
         contact = findViewById(R.id.contact_usaha);
         img_prof = findViewById(R.id.img_profile);
 
+        ln = findViewById(R.id.linearLayout2);
+        pb = findViewById(R.id.progressBar);
+
+        ln.setVisibility(View.GONE);
+
+
         chatRoomRepository = new ChatRoomRepository(FirebaseFirestore.getInstance());
 
         db.collection("barber").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()) {
+                if (documentSnapshot.exists()) {
                     nama.setText(documentSnapshot.getString("nama"));
                     alamat.setText(documentSnapshot.getString("alamat"));
                     desc.setText(documentSnapshot.getString("desc"));
                     harga.setText(documentSnapshot.get("harga").toString());
                     contact.setText(documentSnapshot.get("contact").toString());
-                    final StorageReference Ref = storageReference.child(documentSnapshot.getString("nama")  + "/Profile.jpg");
+                    final StorageReference Ref = storageReference.child(documentSnapshot.getString("nama") + "/Profile.jpg");
                     Ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
                             Picasso.get().load(uri).fit().placeholder(R.mipmap.ic_launcher)
                                     .centerCrop().into(img_prof);
+                            ln.setVisibility(View.VISIBLE);
+                            pb.setVisibility(View.GONE);
 
                         }
                     });
@@ -121,18 +134,34 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
         pesanbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                db.collection("pesan").document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            Toast.makeText(
+                                    BarberPageActivity.this,
+                                    "Hanya Dapat Memesan Satu Kali Dalam Satu Waktu, Silahkan Selesaikan Pemesanan Sebelumnya",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }else{
+                            Intent i = new Intent(BarberPageActivity.this, ReservationActivity.class);
+                            i.putExtra("id", id);
+                            startActivity(i);
+                        }
+                    }
+                });
 
-                Intent i = new Intent(BarberPageActivity.this,ReservationActivity.class);
-                i.putExtra("id",id);
-                startActivity(i);
+
+
             }
         });
 
         chatbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CollectionReference cref=db.collection("rooms");
-                Query q1=cref.whereEqualTo("id_usaha",id).whereEqualTo("id_user",userId);
+                CollectionReference cref = db.collection("rooms");
+                Query q1 = cref.whereEqualTo("id_usaha", id).whereEqualTo("id_user", userId);
                 q1.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -142,8 +171,8 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
                             rId = ds.getId();
                             rUsaha = ds.getString("id_usaha");
                             rUser = ds.getString("id_user");
-                            if(rUsaha.equals(id)){
-                                if(rUser.equals(userId)){
+                            if (rUsaha.equals(id)) {
+                                if (rUser.equals(userId)) {
                                     isExisting = true;
                                     Intent intent = new Intent(BarberPageActivity.this, ChatActivity.class);
                                     intent.putExtra(BarberPageActivity.CHAT_ROOM_ID, ds.getId());
@@ -159,7 +188,7 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
                             // TODO: add item to Firestore
 
                             chatRoomRepository.createRoom(
-                                    id,userId,
+                                    id, userId,
                                     new OnSuccessListener<DocumentReference>() {
                                         @Override
                                         public void onSuccess(DocumentReference documentReference) {
@@ -186,7 +215,6 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
                 });
 
 
-
             }
         });
 
@@ -201,9 +229,9 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
         }).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     List<ImagePage> imagePages = new ArrayList<>();
-                    for (QueryDocumentSnapshot imageSnapshot : task.getResult()){
+                    for (QueryDocumentSnapshot imageSnapshot : task.getResult()) {
                         ImagePage imagePage = imageSnapshot.toObject(ImagePage.class);
                         imagePages.add(imagePage);
                     }
@@ -221,7 +249,7 @@ public class BarberPageActivity extends AppCompatActivity implements com.ribal.c
 
     @Override
     public void onFireStoreLoadFailed(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 

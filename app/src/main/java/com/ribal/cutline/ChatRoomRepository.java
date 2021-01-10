@@ -67,12 +67,14 @@ public class ChatRoomRepository {
     public void addMessageToChatRoom(String roomId,
                                      String senderId,
                                      String message,
+                                     String time,
                                      final OnSuccessListener<DocumentReference> successCallback,
                                      final OnFailureListener failureCallback) {
         Map<String, Object> chat = new HashMap<>();
         chat.put("chat_room_id", roomId);
         chat.put("sender_id", senderId);
         chat.put("message", message);
+        chat.put("time", time);
         chat.put("sent", System.currentTimeMillis());
 
         db.collection("chats")

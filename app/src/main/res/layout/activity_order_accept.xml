@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ReservationActivity">
+    tools:context=".activity.OrderDetailActivity">
 
     <TextView
         android:id="@+id/textView26"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:padding="5dp"
-        android:text="Reservation"
+        android:text="Order Detail"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,43 +120,16 @@
 
 
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Kontak : +62 "
-                        android:textColor="@color/merah"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/contact_usaha"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Kontak"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-
                     <TextView
                         android:id="@+id/textView14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pilih Tanggal :"
+                        android:text="Tanggal :"
                         android:textColor="@color/merah"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -171,7 +144,7 @@
                         android:id="@+id/date_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:text="Tanggal"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -180,82 +153,155 @@
                         app:layout_constraintHorizontal_bias="0.04"
                         app:layout_constraintStart_toEndOf="@+id/textView14"
                         app:layout_constraintTop_toTopOf="@+id/textView14" />
-
-
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/datebtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/round_bt_black"
-                    android:padding="20dp"
-                    android:text="Pilih Tanggal"
-                    android:textColor="@color/white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
-
                     <TextView
                         android:id="@+id/textView15"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pilih Waktu :"
+                        android:text="Waktu :"
                         android:textColor="@color/merah"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.04"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView14"
+                        app:layout_constraintVertical_bias="0.110000014" />
 
 
                     <TextView
                         android:id="@+id/waktu_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:text="Waktu"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
-
-
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView15"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.04"
+                        app:layout_constraintStart_toEndOf="@+id/textView15"
+                        app:layout_constraintTop_toTopOf="@+id/textView15" />
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/timebtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/round_bt_black"
-                    android:padding="20dp"
-                    android:text="Pilih Waktu"
-                    android:textColor="@color/white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom|right">
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorPrimaryDark"
-                        android:gravity="right"
-                        >
+                        android:text="Kontak : +62 "
+                        android:textColor="@color/merah"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.04"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/img_profile"
+                        app:layout_constraintVertical_bias="0.060000002" />
+
+                    <TextView
+                        android:id="@+id/contact_usaha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kontak"
+
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.04"
+                        app:layout_constraintStart_toEndOf="@+id/textView13"
+                        app:layout_constraintTop_toTopOf="@+id/textView13"
+                        app:layout_constraintVertical_bias="0.17000002" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Catatan"
+                    android:textColor="@color/merah"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/textView15"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/textView15"
+                    app:layout_constraintTop_toBottomOf="@+id/textView15"
+                    app:layout_constraintVertical_bias="0.17000002" />
+
+                <EditText
+                    android:id="@+id/noteET"
+                    android:layout_width="350dp"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/et_bg"
+                    android:gravity="top"
+                    android:hint="Catatan"
+                    android:inputType="textMultiLine"
+                    android:padding="10dp"
+                    android:textColor="@color/colortext"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/textView16"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/textView16"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16"
+                    app:layout_constraintVertical_bias="0.060000002" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
                     <Button
-                        android:id="@+id/pesanbtn"
-                        android:layout_width="200dp"
+                        android:id="@+id/batalbtn"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/merah"
+                        android:text="Batalkan"
+                        android:background="@drawable/round_bt_black"
+                        android:textColor="@color/white"
+                        android:layout_marginRight="20dp"
                         android:padding="10dp"
-                        android:text="Pesan"
-                        android:textColor="@color/white" />
-                    </LinearLayout>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.25"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView15"
+                        app:layout_constraintVertical_bias="0.89"
+                        android:layout_marginEnd="20dp" />
+
+                    <Button
+                        android:id="@+id/selesaibtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Selesai"
+                        android:background="@drawable/round_bt_black"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="20dp"
+                        android:padding="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tolakbtn"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.47"
+                        app:layout_constraintStart_toEndOf="@+id/tolakbtn"
+                        app:layout_constraintTop_toTopOf="@+id/tolakbtn"
+                        app:layout_constraintVertical_bias="0.89" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
-
     </LinearLayout>
 
     <ProgressBar

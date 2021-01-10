@@ -24,14 +24,16 @@
         android:id="@+id/profileFullName"
         android:layout_width="326dp"
         android:layout_height="wrap_content"
-        android:drawablePadding="5dp"
         android:ems="10"
         android:hint="Name"
+        android:elevation="100dp"
+        android:textSize="18sp"
+        android:background="@drawable/et_bg"
+        android:drawableLeft="@drawable/ic_baseline_account_circle_24"
+        android:drawablePadding="5dp"
         android:inputType="textCapSentences"
         android:padding="10dp"
-        android:textColor="#363F54"
-        android:textColorHint="#363F54"
-        android:textSize="18sp"
+        android:textColor="@color/colortext"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,38 +44,62 @@
         android:id="@+id/profileEmailAddress"
         android:layout_width="326dp"
         android:layout_height="wrap_content"
-        android:drawablePadding="5dp"
         android:ems="10"
         android:hint="Email"
-        android:padding="10dp"
+        android:background="@drawable/et_bg"
+        android:drawableLeft="@drawable/ic_baseline_email_24"
+        android:drawablePadding="5dp"
         android:inputType="textEmailAddress"
-        android:textColor="#363F54"
-        android:textColorHint="#363F54"
-        android:textSize="18sp"
+        android:padding="10dp"
+        android:textColor="@color/colortext"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileFullName"
         app:layout_constraintVertical_bias="0.050000012" />
 
-    <EditText
-        android:id="@+id/alamat"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="326dp"
         android:layout_height="100dp"
-        android:drawablePadding="5dp"
-        android:ems="10"
-        android:padding="10dp"
-        android:hint="Alamat"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:textColor="#363F54"
-        android:textColorHint="#363F54"
-        android:textSize="18sp"
+        android:background="@drawable/et_bg"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/profileEmailAddress"
+        app:layout_constraintStart_toStartOf="@+id/profileEmailAddress"
         app:layout_constraintTop_toBottomOf="@+id/profileEmailAddress"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintVertical_bias="0.100000024">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="message icon"
+            android:paddingLeft="@dimen/tendp"
+            android:paddingTop="@dimen/tendp"
+            android:paddingBottom="@dimen/tendp"
+            android:scaleType="fitStart"
+
+            android:src="@drawable/ic_baseline_location_on_24" />
+
+        <EditText
+            android:id="@+id/alamat"
+            android:layout_width="326dp"
+            android:layout_height="100dp"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Alamat"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textColor="#363F54"
+            android:textColorHint="#363F54"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileEmailAddress"
+            app:layout_constraintVertical_bias="0.050000012" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/saveProfileInfo"
@@ -87,7 +113,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alamat"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.946" />
 
     <Button

@@ -56,7 +56,7 @@ public class ViewPageAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"Bisa diklik", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Image Dashboard", Toast.LENGTH_SHORT).show();
             }
         });
 

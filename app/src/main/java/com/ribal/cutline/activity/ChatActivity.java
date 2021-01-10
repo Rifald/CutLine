@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +29,11 @@ import com.ribal.cutline.ChatRoomRepository;
 import com.ribal.cutline.R;
 import com.ribal.cutline.model.Chat;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
@@ -41,6 +46,7 @@ public class ChatActivity extends AppCompatActivity {
     private String roomId = "";
     private String roomUserId = "";
     private String roomBarberId = "";
+    String time ="";
     FirebaseAuth fAuth;
     String userId;
 
@@ -105,6 +111,10 @@ public class ChatActivity extends AppCompatActivity {
         message = findViewById(R.id.message_text);
         send = findViewById(R.id.send_message);
         chats = findViewById(R.id.chats);
+        Date currentTime = Calendar.getInstance().getTime();
+        @SuppressLint("SimpleDateFormat") DateFormat date = new SimpleDateFormat("HH:mm a");
+
+        time = date.format(currentTime);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setReverseLayout(true);
         chats.setLayoutManager(manager);
@@ -134,6 +144,7 @@ public class ChatActivity extends AppCompatActivity {
                 roomId,
                 userId,
                 chatMessage,
+                time,
                 new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -171,6 +182,7 @@ public class ChatActivity extends AppCompatActivity {
                                     doc.getString("chat_room_id"),
                                     doc.getString("sender_id"),
                                     doc.getString("message"),
+                                    doc.getString("time"),
                                     doc.getLong("sent")
                             )
                     );

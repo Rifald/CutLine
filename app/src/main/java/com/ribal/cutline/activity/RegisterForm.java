@@ -118,6 +118,7 @@ public class RegisterForm extends AppCompatActivity {
                             Map<String, Object> user = new HashMap<>();
                             user.put("nama", fullName);
                             user.put("email", email);
+                            user.put("alamat", alamat);
                             user.put("type",type);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

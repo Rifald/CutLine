@@ -1,5 +1,6 @@
 package com.ribal.cutline.Adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,8 +71,9 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
             message = itemView.findViewById(R.id.chat_message);
         }
 
+        @SuppressLint("SetTextI18n")
         public void bind(Chat chat) {
-            message.setText(chat.getMessage());
+            message.setText(chat.getMessage() + "\n"+ chat.getTime());
         }
     }
 }

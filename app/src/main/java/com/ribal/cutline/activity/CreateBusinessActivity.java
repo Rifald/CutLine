@@ -69,6 +69,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
     StorageReference storageReference;
     FirebaseAuth fAuth;
     String userId;
+    boolean img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
 
         imgB = findViewById(R.id.img_create);
+        img = false;
 
         Intent data = getIntent();
         final String id = data.getStringExtra("idU");
@@ -107,7 +109,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
                         descB.setText(documentSnapshot.getString("desc"));
                         hargaB.setText(documentSnapshot.get("harga").toString());
                         contactB.setText(documentSnapshot.get("contact").toString());
-                        final StorageReference Ref = storageReference.child(namaB.getText()  + "/Profile.jpg");
+                        final StorageReference Ref = storageReference.child(namaB.getText() + "/Profile.jpg");
                         Ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
@@ -135,6 +137,9 @@ public class CreateBusinessActivity extends AppCompatActivity {
         simpanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!img) {
+                    Toast.makeText(CreateBusinessActivity.this, "Mohon isikan Foto", Toast.LENGTH_SHORT).show();
+                }
 
                 String nama = namaB.getText().toString().trim();
                 String desc = descB.getText().toString().trim();
@@ -144,36 +149,41 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
 
                 if (!validateInputs(nama, desc, alamat, hrg, contact)) {
-                    final ProgressDialog progressDialog = new ProgressDialog(CreateBusinessActivity.this);
+                    if (!img) {
+                        Toast.makeText(CreateBusinessActivity.this, "Mohon isikan Foto", Toast.LENGTH_SHORT).show();
+                    } else {
+                        final ProgressDialog progressDialog = new ProgressDialog(CreateBusinessActivity.this);
 
-                    progressDialog.setMessage("Creating...");
-                    progressDialog.show();
+                        progressDialog.setMessage("Creating...");
+                        progressDialog.show();
 
-                    Map<String, Object> file = new HashMap<>();
-                    file.put("id", userId);
-                    file.put("nama", namaB.getText().toString());
-                    file.put("desc", descB.getText().toString());
-                    file.put("contact", contactB.getText().toString());
-                    file.put("harga", Integer.parseInt(String.valueOf(hargaB.getText())));
-                    file.put("alamat", alamatB.getText().toString());
-                    db.collection("barber").document(userId)
-                            .set(file)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(CreateBusinessActivity.this, "Usaha Ditambahkan", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(CreateBusinessActivity.this, ManageBusinessActivity.class));
-                                    finish();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
+                        Map<String, Object> file = new HashMap<>();
+                        file.put("id", userId);
+                        file.put("nama", namaB.getText().toString());
+                        file.put("desc", descB.getText().toString());
+                        file.put("contact", contactB.getText().toString());
+                        file.put("harga", Integer.parseInt(String.valueOf(hargaB.getText())));
+                        file.put("alamat", alamatB.getText().toString());
+                        db.collection("barber").document(userId)
+                                .set(file)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(CreateBusinessActivity.this, "Usaha Ditambahkan", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(CreateBusinessActivity.this, ManageBusinessActivity.class));
+                                        finish();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
 
-                                }
-                            });
+                                    }
 
+
+                                });
+                    }
 
                 }
             }
@@ -308,6 +318,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
     private void uploadImageToFirebase(String name, Uri contentUri) {
 
+        img = true;
         final StorageReference Ref = storageReference.child(namaB.getText() + "/Profile.jpg");
         Ref.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

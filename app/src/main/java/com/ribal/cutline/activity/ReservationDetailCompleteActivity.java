@@ -1,10 +1,7 @@
 package com.ribal.cutline.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,9 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -28,7 +23,10 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ReservationDetailActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class ReservationDetailCompleteActivity extends AppCompatActivity {
 
     private static final String TAG = "Error";
     TextView nama, alamat, contact, tanggal, waktu, status;
@@ -40,7 +38,6 @@ public class ReservationDetailActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     String userId;
     private String idUsaha;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +52,7 @@ public class ReservationDetailActivity extends AppCompatActivity {
         userId = fAuth.getCurrentUser().getUid();
 
         batalbtn = findViewById(R.id.batalkbtn);
-        catatan= findViewById(R.id.noteET);
+        catatan = findViewById(R.id.noteET);
 
         nama = findViewById(R.id.nama_usahanya);
         alamat = findViewById(R.id.alamat_usaha);
@@ -66,13 +63,13 @@ public class ReservationDetailActivity extends AppCompatActivity {
         waktu = findViewById(R.id.waktu_tv);
 
 
-        db.collection("pesan").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection("history").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()) {
+                if (documentSnapshot.exists()) {
                     String statusP = documentSnapshot.getString("status");
-                    if(statusP.equals("Diterima")){
+                    if (statusP.equals("Pesanan Dibatalkan") || statusP.equals("Ditolak") || statusP.equals("Selesai")) {
                         batalbtn.setVisibility(View.GONE);
                         catatan.setEnabled(false);
                     }
@@ -86,7 +83,7 @@ public class ReservationDetailActivity extends AppCompatActivity {
                         @SuppressLint("SetTextI18n")
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if(documentSnapshot.exists()) {
+                            if (documentSnapshot.exists()) {
                                 nama.setText(documentSnapshot.getString("nama"));
                                 alamat.setText(documentSnapshot.getString("alamat"));
                                 final StorageReference Ref = storageReference.child(documentSnapshot.getString("nama") + "/Profile.jpg");
@@ -102,51 +99,6 @@ public class ReservationDetailActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }
-        });
-
-
-
-
-
-        batalbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final ProgressDialog progressDialog = new ProgressDialog(ReservationDetailActivity.this);
-
-                progressDialog.setMessage("Processing...");
-                progressDialog.show();
-
-                Map<String, Object> file = new HashMap<>();
-                file.put("usahaid", idUsaha);
-                file.put("catatan", catatan.getText().toString());
-                file.put("userid", userId);
-                file.put("contact", contact.getText().toString());
-                file.put("waktu", waktu.getText().toString());
-                file.put("tanggal", tanggal.getText().toString());
-                file.put("status", "Pesanan Dibatalkan");
-                file.put("sent", System.currentTimeMillis());
-
-                db.collection("history").document().set(file).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        db.collection("pesan").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                progressDialog.dismiss();
-                                Toast.makeText(ReservationDetailActivity.this, "Pesanan Dibatalkan", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        });
-                    }
-                });
-
-
             }
         });
 

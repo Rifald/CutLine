@@ -29,6 +29,7 @@ import com.ribal.cutline.activity.ChatRoomActivity;
 import com.ribal.cutline.activity.FindBarberActivity;
 import com.ribal.cutline.activity.OrderHistoryActivity;
 import com.ribal.cutline.activity.ReservationDetailActivity;
+import com.ribal.cutline.activity.ReservationDetailCompleteActivity;
 import com.ribal.cutline.model.Pesanan;
 import com.squareup.picasso.Picasso;
 
@@ -60,7 +61,7 @@ public class OrderHistoryCompleteFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         fAuth = FirebaseAuth.getInstance();
         userId = fAuth.getCurrentUser().getUid();
-        Query query = fStore.collection("history").whereEqualTo("userid",userId);
+        Query query = fStore.collection("history").whereEqualTo("userid",userId).orderBy("sent", Query.Direction.DESCENDING);;
         FirestoreRecyclerOptions<Pesanan> options = new FirestoreRecyclerOptions.Builder<Pesanan>()
                 .setQuery(query, Pesanan.class)
                 .build();
@@ -76,7 +77,7 @@ public class OrderHistoryCompleteFragment extends Fragment {
             public void onItemClickListener(DocumentSnapshot documentSnapshot, int position) {
                 String id = documentSnapshot.getId();
 
-                Intent i = new Intent(getActivity(), ReservationDetailActivity.class);
+                Intent i = new Intent(getActivity(), ReservationDetailCompleteActivity.class);
                 i.putExtra("id",id);
                 startActivity(i);
             }

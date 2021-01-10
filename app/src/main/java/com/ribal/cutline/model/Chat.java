@@ -5,14 +5,24 @@ public class Chat {
     private String chatRoomId;
     private String senderId;
     private String message;
+    private String time;
     private long sent;
 
-    public Chat(String id, String chatRoomId, String senderId, String message, long sent) {
+    public Chat(String id, String chatRoomId, String senderId, String message,String time, long sent) {
         this.id = id;
         this.chatRoomId = chatRoomId;
         this.senderId = senderId;
         this.message = message;
+        this.time = time;
         this.sent = sent;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getId() {

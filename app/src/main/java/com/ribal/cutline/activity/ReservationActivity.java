@@ -10,10 +10,13 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -44,6 +47,8 @@ public class ReservationActivity extends AppCompatActivity {
     String userId;
     TimePickerDialog Tpicker;
     DatePickerDialog Dpicker;
+    LinearLayout ln;
+    ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,10 @@ public class ReservationActivity extends AppCompatActivity {
         img_prof = findViewById(R.id.img_profile);
         tanggal = findViewById(R.id.date_tv);
         waktu = findViewById(R.id.waktu_tv);
+        ln = findViewById(R.id.linearLayout2);
+        pb = findViewById(R.id.progressBar);
+
+        ln.setVisibility(View.GONE);
 
         db.collection("barber").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
@@ -83,6 +92,8 @@ public class ReservationActivity extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             Picasso.get().load(uri).fit().placeholder(R.mipmap.ic_launcher)
                                     .centerCrop().into(img_prof);
+                            ln.setVisibility(View.VISIBLE);
+                            pb.setVisibility(View.GONE);
 
                         }
                     });
@@ -136,6 +147,17 @@ public class ReservationActivity extends AppCompatActivity {
                 String namaU = nama.getText().toString().trim();
                 String alamatU = alamat.getText().toString().trim();
                 String contactU = contact.getText().toString().trim();
+                String tanggalU = tanggal.getText().toString().trim();
+                String waktuU = waktu.getText().toString().trim();
+                if (tanggalU.equals("")) {
+                    Toast.makeText(ReservationActivity.this, "Harap Menentikan Tanggal", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (waktuU.equals("")) {
+                    Toast.makeText(ReservationActivity.this, "Harap Menentikan Waktu", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
 
 
@@ -154,6 +176,7 @@ public class ReservationActivity extends AppCompatActivity {
                 file.put("waktu", waktu.getText());
                 file.put("status", "Sedang diproses");
                 file.put("catatan", "");
+                file.put("sent", System.currentTimeMillis());
                 db.collection("pesan").document(userId)
                         .set(file)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

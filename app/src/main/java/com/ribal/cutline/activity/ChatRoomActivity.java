@@ -74,25 +74,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         });
     }
 
-    private void getChatRoomBarbers() {
-        chatRoomRepository.getRoomsBarber(userId, new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(QuerySnapshot snapshots, FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.e("MainActivity", "Listen failed.", e);
-                    return;
-                }
 
-                List<ChatRoom> rooms = new ArrayList<>();
-                for (QueryDocumentSnapshot doc : snapshots) {
-                    rooms.add(new ChatRoom(doc.getId(), doc.getString("id_usaha"), doc.getString("id_user")));
-                }
-
-                adapter = new ChatRoomsAdapter(rooms, listener);
-                chatRooms.setAdapter(adapter);
-            }
-        });
-    }
 
     ChatRoomsAdapter.OnChatRoomClickListener listener = new ChatRoomsAdapter.OnChatRoomClickListener() {
         @Override

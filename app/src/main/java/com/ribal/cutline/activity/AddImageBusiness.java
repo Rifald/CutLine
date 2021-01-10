@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -193,6 +194,11 @@ public class AddImageBusiness extends AppCompatActivity {
     }
 
     private void uploadImageToFirebase(String name, Uri contentUri) {
+        final ProgressDialog progressDialog = new ProgressDialog(AddImageBusiness.this);
+
+        progressDialog.setMessage("Creating...");
+        progressDialog.show();
+
         final StorageReference image = storageReference.child("Barber/"+nama+ "/dashboard/" + name);
         image.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -209,13 +215,13 @@ public class AddImageBusiness extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-
+                                        progressDialog.dismiss();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-
+                                        progressDialog.dismiss();
                                     }
                                 });
                     }
