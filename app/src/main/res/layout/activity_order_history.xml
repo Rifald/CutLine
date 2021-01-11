@@ -5,14 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.OrderRequestActivity">
-
+    <RelativeLayout
+        android:id="@+id/rL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/lin_lay_black"
+        >
     <TextView
         android:id="@+id/textView26"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Order History"
-        android:layout_margin="5dp"
+android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,19 +31,24 @@
         android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:text="Dalam Proses"
+        android:textColor="@color/white"
+        android:background="@drawable/bt_frag"
         android:layout_below="@id/textView26"/>
     <Button
         android:id="@+id/selesai_btn"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:text="Selesai"
+        android:textColor="@color/white"
+        android:background="@drawable/bt_fragr"
         android:layout_toRightOf="@+id/inProgrees_btn"
-        android:layout_below="@id/textView26"/>
+        android:layout_below="@id/textView26" />
+</RelativeLayout>
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/selesai_btn"
+        android:layout_below="@+id/rL"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </RelativeLayout>

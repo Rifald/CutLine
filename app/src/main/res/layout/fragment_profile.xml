@@ -33,6 +33,8 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimaryDark"
                     android:orientation="vertical">
+
+
                     <Button
                         android:id="@+id/logout_btn"
                         android:layout_width="wrap_content"
@@ -41,6 +43,15 @@
                         android:background="@drawable/round_bt"
                         android:text="Logout"
                         android:textColor="@color/colorPrimaryDark" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Profile"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        android:layout_gravity="center"
+                        android:textStyle="bold" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profileImageView"
