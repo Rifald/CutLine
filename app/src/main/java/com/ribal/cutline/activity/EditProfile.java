@@ -132,7 +132,7 @@ public class EditProfile extends AppCompatActivity {
                         Map<String, Object> edited = new HashMap<>();
                         edited.put("email", email);
                         edited.put("nama", profileFullName.getText().toString());
-                        edited.put("matpel", profileAlamat.getText().toString());
+                        edited.put("alamat", profileAlamat.getText().toString());
 
                         docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
