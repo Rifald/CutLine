@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".fragment.FragmentDashboardBarber">
 
-
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/cardView"
         android:layout_width="350dp"
         android:layout_height="100dp"
         app:cardCornerRadius="20dp"
@@ -22,14 +21,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/merah">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@mipmap/ic_launcher"
-                app:civ_border_color="#b9c2ff"
+                app:civ_border_color="@color/white"
                 app:civ_border_width="1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -44,10 +43,11 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/profileImageView"
-                android:fontFamily="@font/alegreya_sc"
-                android:text="nama"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+
+                android:text="Nama"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
 
             <View
                 android:id="@+id/separator"
@@ -56,7 +56,7 @@
                 android:layout_below="@id/nama_user"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/profileImageView"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/white" />
 
             <TextView
                 android:id="@+id/alamat_user"
@@ -64,12 +64,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/separator"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/profileImageView"
-                android:fontFamily="@font/alegreya_sc"
                 android:text="Alamat"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
 
         </RelativeLayout>
 
@@ -112,54 +112,63 @@
 
     <Button
         android:id="@+id/manage_btn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="Manage Business"
+        android:layout_width="120dp"
+        android:layout_height="202dp"
+        android:background="@drawable/main_bt_black"
+        android:drawableTop="@drawable/bt_barber_ico"
+        android:padding="30dp"
+
+        android:text="Manage Busines"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView3"
-        app:layout_constraintVertical_bias="0.22000003" />
+        app:layout_constraintVertical_bias="0.39" />
 
     <Button
         android:id="@+id/chat_btn"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="100dp"
+        android:background="@drawable/main_bt_black"
         android:text="Chat"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"
+        android:drawableRight="@drawable/chat_ico"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/manage_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.84"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3"
-        app:layout_constraintVertical_bias="0.22000003" />
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toEndOf="@+id/manage_btn"
+        app:layout_constraintTop_toBottomOf="@+id/reserve_btn"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/reserve_btn"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="100dp"
+        android:background="@drawable/main_bt_black"
         android:text="Reservation"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"
+        android:drawableRight="@drawable/bt_reserve_ico"
+        app:layout_constraintBottom_toBottomOf="@+id/manage_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3"
-        app:layout_constraintVertical_bias="0.22000003" />
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toEndOf="@+id/manage_btn"
+        app:layout_constraintTop_toTopOf="@+id/manage_btn"
+        app:layout_constraintVertical_bias="0.0"
+        android:drawableEnd="@drawable/bt_reserve_ico" />
 
-    <TextView
-        android:id="@+id/textView3"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alegreya_sc"
-        android:text="History Reservation"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:indeterminateDrawable="@drawable/circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4"
-        app:layout_constraintVertical_bias="0.41000003" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

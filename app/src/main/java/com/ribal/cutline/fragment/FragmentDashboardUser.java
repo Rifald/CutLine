@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,6 +38,8 @@ public class FragmentDashboardUser extends Fragment {
     FirebaseFirestore fstore;
     FirebaseAuth fAuth;
     String userId;
+    ProgressBar progressBar;
+    CardView cardView;
 
     StorageReference storageReference;
 
@@ -65,6 +69,13 @@ public class FragmentDashboardUser extends Fragment {
         orderHistory = view.findViewById(R.id.orderhis_btn);
         chatRoom = view.findViewById(R.id.chat_btn);
 
+        cardView = view.findViewById(R.id.cardView);
+        progressBar = view.findViewById(R.id.progressBar);
+
+        cardView.setVisibility(View.GONE);
+        findBarber.setVisibility(View.GONE);
+        orderHistory.setVisibility(View.GONE);
+        chatRoom.setVisibility(View.GONE);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -78,6 +89,11 @@ public class FragmentDashboardUser extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 namaTv.setText(documentSnapshot.getString("nama"));
                 alamatTv.setText(documentSnapshot.getString("alamat"));
+                cardView.setVisibility(View.VISIBLE);
+                findBarber.setVisibility(View.VISIBLE);
+                orderHistory.setVisibility(View.VISIBLE);
+                chatRoom.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 showImage();
             }
             private void showImage() {

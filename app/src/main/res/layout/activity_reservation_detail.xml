@@ -120,29 +120,37 @@
 
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tanggal :"
+                        android:textColor="@color/merah"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/date_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tanggal"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tanggal :"
-                    android:textColor="@color/merah"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                     />
-                <TextView
-                    android:id="@+id/date_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tanggal"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
 
                 <TextView
                     android:id="@+id/textView15"
@@ -154,14 +162,19 @@
                     android:textStyle="bold" />
 
 
-
                 <TextView
                     android:id="@+id/waktu_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Waktu"
-                    android:textColor="@color/colorPrimaryDark"/>
+                    android:textColor="@color/colorPrimaryDark" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
@@ -169,8 +182,7 @@
                     android:text="Kontak : +62 "
                     android:textColor="@color/merah"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/contact_usaha"
@@ -178,7 +190,13 @@
                     android:layout_height="wrap_content"
                     android:text="Kontak"
                     android:textColor="@color/colorPrimaryDark" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textView17"
                     android:layout_width="wrap_content"
@@ -196,6 +214,7 @@
                     android:text="Status"
                     android:textColor="@color/colorPrimaryDark" />
 
+            </LinearLayout>
 
                 <TextView
                     android:id="@+id/textView16"
@@ -204,13 +223,13 @@
                     android:text="Catatan"
                     android:textColor="@color/merah"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"/>
 
                 <EditText
                     android:id="@+id/noteET"
                     android:layout_width="350dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
+                    android:layout_height="200dp"
                     android:background="@drawable/et_bg"
                     android:gravity="top"
                     android:hint="Catatan"
@@ -218,22 +237,22 @@
                     android:padding="10dp"
                     android:textColor="@color/colortext"
                     android:textColorHint="@color/colortext"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView16"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/textView16"
-                    app:layout_constraintTop_toBottomOf="@+id/textView16"
-                    app:layout_constraintVertical_bias="0.060000002" />
+                    android:layout_gravity="center" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:orientation="horizontal"
+                android:gravity="center">
                 <Button
                     android:id="@+id/batalkbtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Batalkan Pesanan"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView15"
-                    app:layout_constraintVertical_bias="0.89" />
+                    android:padding="10dp"
+                    android:background="@drawable/round_bt_black"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

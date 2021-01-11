@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 
@@ -37,6 +39,8 @@ public class FragmentDashboardBarber extends Fragment {
     FirebaseAuth fAuth;
     StorageReference storageReference;
     String userId;
+    ProgressBar progressBar;
+    CardView cardView;
 
     public FragmentDashboardBarber() {
         // Required empty public constructor
@@ -65,6 +69,14 @@ public class FragmentDashboardBarber extends Fragment {
         reserveB = view.findViewById(R.id.reserve_btn);
         chatRoom = view.findViewById(R.id.chat_btn);
 
+        cardView = view.findViewById(R.id.cardView);
+        progressBar = view.findViewById(R.id.progressBar);
+
+        cardView.setVisibility(View.GONE);
+        manageB.setVisibility(View.GONE);
+        reserveB.setVisibility(View.GONE);
+        chatRoom.setVisibility(View.GONE);
+
         storageReference = FirebaseStorage.getInstance().getReference();
         fstore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
@@ -76,6 +88,11 @@ public class FragmentDashboardBarber extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 namaTv.setText(documentSnapshot.getString("nama"));
                 alamatTv.setText(documentSnapshot.getString("alamat"));
+                cardView.setVisibility(View.VISIBLE);
+                manageB.setVisibility(View.VISIBLE);
+                reserveB.setVisibility(View.VISIBLE);
+                chatRoom.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 showImage();
             }
 

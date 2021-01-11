@@ -1,16 +1,22 @@
 package com.ribal.cutline.Adapter;
 
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.ribal.cutline.R;
 import com.ribal.cutline.model.ChatRoom;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -58,10 +64,12 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.Chat
     class ChatRoomViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         ChatRoom chatRoom;
+        ImageView imageView;
 
         public ChatRoomViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.item_chat_room_name);
+            imageView = itemView.findViewById(R.id.profileImageView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -78,7 +86,18 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.Chat
                 db.collection("barber").document(chatRoom.getId_usaha()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        name.setText(documentSnapshot.getString("nama"));
+                        String nama = documentSnapshot.getString("nama");
+                        name.setText(nama);
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Barber");
+                        final StorageReference Ref = storageReference.child(nama  + "/Profile.jpg");
+                        Log.d("Error", Ref+"");
+                        Ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Picasso.get().load(uri).fit().placeholder(R.mipmap.ic_launcher)
+                                        .fit().centerCrop().into(imageView);
+                            }
+                        });
                     }
                 });
             }
@@ -87,6 +106,17 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.Chat
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         name.setText(documentSnapshot.getString("nama"));
+
+                    }
+                });
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference("users");
+                final StorageReference Ref = storageReference.child(chatRoom.getId_user() + "/profile.jpg");
+                Log.d("Error", Ref+"");
+                Ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).fit().placeholder(R.mipmap.ic_launcher)
+                                .fit().centerCrop().into(imageView);
                     }
                 });
             }

@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -50,6 +52,17 @@ public class OrderRequestAdapter extends FirestoreRecyclerAdapter<Pesanan, Order
 
                 holder.namaTv.setText(documentSnapshot.getString("nama"));
                 holder.alamatTv.setText(documentSnapshot.getString("alamat"));
+
+            }
+        }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                holder.namaTv.setVisibility(View.VISIBLE);
+                holder.alamatTv.setVisibility(View.VISIBLE);
+                holder.imgProfile.setVisibility(View.VISIBLE);
+                holder.statusTv.setVisibility(View.VISIBLE);
+                holder.sep.setVisibility(View.VISIBLE);
+                holder.progressBar.setVisibility(View.GONE);
             }
         });
 
@@ -60,15 +73,10 @@ public class OrderRequestAdapter extends FirestoreRecyclerAdapter<Pesanan, Order
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).fit().placeholder(R.mipmap.ic_launcher)
                         .fit().centerCrop().into(holder.imgProfile);
-                holder.namaTv.setVisibility(View.VISIBLE);
-                holder.alamatTv.setVisibility(View.VISIBLE);
-                holder.imgProfile.setVisibility(View.VISIBLE);
-                holder.statusTv.setVisibility(View.VISIBLE);
-                holder.sep.setVisibility(View.VISIBLE);
-                holder.progressBar.setVisibility(View.GONE);
 
             }
         });
+
 
 
 
